@@ -6,6 +6,6 @@ Currently supports exploiting (autopwn) procesess leaked handles spawning a new 
 
 LHF identifies in realtime inherited handles and gives the researcher explotability tips
 
-![](Images/Output.png)
+![](Images/OutputLog.png)
 
 Presented at rootedcon 2022 https://www.rootedcon.com/ponentes-rooted2022/
