@@ -1,5 +1,6 @@
 # LHF - Leaked Handles Finder
-Leaked Windows processes handles identification tool. Useful for identify new LPE vulnerabilities during a pentest or simply as a new research process.
+Leaked Windows processes handles identification tool. Useful for identify new LPE vulnerabilities during a pentest or simply as a new research process. 
+Currently supports exploiting (autopwn) procesess leaked handles spawning a new arbitrary process (cmd.exe default).
 
 ![](Images/Help.png)
 
