@@ -1,5 +1,36 @@
 #include <iostream>
 #include <windows.h>
+#include <tlhelp32.h>
+
+
+int GetProcessByName(PCWSTR name)
+{
+	DWORD pid = 0;
+
+	// Create toolhelp snapshot.
+	HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	PROCESSENTRY32 process;
+	ZeroMemory(&process, sizeof(process));
+	process.dwSize = sizeof(process);
+
+	// Walkthrough all processes.
+	if (Process32First(snapshot, &process))
+	{
+		do
+		{
+			// Compare process.szExeFile based on format of name, i.e., trim file path
+			// trim .exe if necessary, etc.
+			if (wcscmp(process.szExeFile, name) == 0)
+			{
+				return process.th32ProcessID;
+			}
+		} while (Process32Next(snapshot, &process));
+	}
+
+	CloseHandle(snapshot);
+
+	return NULL;
+}
 
 int main()
 {
@@ -11,14 +42,24 @@ int main()
 	ZeroMemory(&processInformation, sizeof(PROCESS_INFORMATION));
 	startupInfo.cb = sizeof(STARTUPINFO);
 
+
+	int pidWinlogon = GetProcessByName(L"winlogon.exe");
+	if (pidWinlogon == NULL) {
+		printf("[-] Can't open Winlogon, run as system");
+	}
+
 	HANDLE phandle = OpenProcess(PROCESS_ALL_ACCESS,
 		TRUE,
-		1424
+		pidWinlogon
 	);
 
+	int pidExplorer = GetProcessByName(L"explorer.exe");
+	if (pidExplorer == NULL) {
+		printf("[-] Can't open Explorer");
+	}
 
 	// Call OpenProcess(), print return code and error code
-	HANDLE processHandle = OpenProcess(PROCESS_QUERY_INFORMATION, true, 12672);
+	HANDLE processHandle = OpenProcess(PROCESS_QUERY_INFORMATION, true, pidExplorer);
 	if (GetLastError() == NULL)
 		printf("[+] OpenProcess() success!\n");
 	else
