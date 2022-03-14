@@ -9,4 +9,4 @@ LHF identifies in realtime inherited handles and gives the researcher explotabil
 ![](Images/OutputLog.png)
 
 Presented at rootedcon 2022 https://www.rootedcon.com/ponentes-rooted2022/
-Presentation -> ![](Presentation/Exploiting Leaked Handles for LPE.pdf)
+Presentation -> Presentation/Exploiting Leaked Handles for LPE.pdf
